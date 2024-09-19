@@ -1,0 +1,11 @@
+<odoo>
+    <record id="imprest_project_manager" model="res.groups">
+        <field name="name">Project Manager</field>
+    </record>
+    <record id="imprest_executive_director" model="res.groups">
+        <field name="name">Executive Director</field>
+    </record>
+     <record id="imprest_managing_director" model="res.groups">
+        <field name="name">Managing Director</field>
+    </record>
+</odoo>

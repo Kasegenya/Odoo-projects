@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_data,access_employee_data,model_employee_data,base.group_user,1,1,1,1
+access_employee_data_project_manager,access_employee_data_project_manager,model_employee_data,imprest_project_manager,1,1,1,1
+access_employee_data_executive_director,access_employee_data_executive_director,model_employee_data,imprest_executive_director,1,1,1,1
+access_employee_data_managing_director,access_employee_data_managing_director,model_employee_data,imprest_managing_director,1,1,1,1
+

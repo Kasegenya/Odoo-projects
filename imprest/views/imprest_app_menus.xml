@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="root_level" name="Imprest App">
+        <menuitem id="employee_data" name ="Enter Request Details" action="employee_data_action"/>
+<!--        <menuitem id="request_approval" name="Request Submitted" action="request_approval_action"/>-->
+    </menuitem>
+</odoo>
