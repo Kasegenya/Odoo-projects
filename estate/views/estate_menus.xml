@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="root_level" name = "Real Estate App">
+
+       <menuitem id="main_menu1" name = "Properties " >
+           <menuitem id="MENU1" name = "View" action="estate_property_action"/>
+        </menuitem>
+        <menuitem id="main_menu2" name = "Users" >
+            <menuitem id="view_users" name="All Users" action ="check_action"/>
+
+        </menuitem>
+        <menuitem id="main_menu3" name = "Transactions " >
+            <menuitem id="MENU3" name="Manage" action ="transactions_action"/>
+        </menuitem>
+        <menuitem id="main_menu4" name = "Setting " >
+            <menuitem id="MENU4_1" name="Property Types " action ="property_type_action"/>
+            <menuitem id="MENU4_2" name="Property Tags" action ="property_tag_action"/>
+        </menuitem>
+
+    </menuitem>
+
+
+</odoo>
