@@ -1,0 +1,152 @@
+<odoo>
+  <data>
+        
+
+
+
+    <record id="account_move_purchase_reference_number" model="ir.ui.view">
+        <field name="name">account.move.purchase.reference</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_reference']" position="after">
+                <field name="internal_reference"/>
+                <field name="purchase_order_ref"/>
+                <field name="delivery_term"/>
+                <field name="other_comments"/>
+                <field name="validity"/>
+
+            </xpath>
+            <xpath expr="//field[@name='payment_reference']" position="replace" />
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="child_ids" invisible="1"/>
+                <field name="contact_person_id" widget="contact" domain="[('id', 'in', child_ids)]"/>
+            </xpath>
+          
+        </field>
+    </record>
+
+    <record id="sale_order_purchase_reference_number" model="ir.ui.view">
+        <field name="name">sale.order.purchase.reference</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="purchase_order_reference" invisible="state != 'sale'"/>
+                <field name="validity"/>
+                <field name="delivery_period"/>
+                <field name="delivery_term"/>
+                <field name="other_comments"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="replace"/>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="child_ids" invisible="1"/>
+                <field name="contact_person_id" widget="contact" domain="[('id', 'in', child_ids)]"/>
+                <field name="purchase_enquiry_ref"/>
+                
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="stock_picking_reference_number" model="ir.ui.view">
+        <field name="name">stock.picking.reference</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="order_ref"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="product_part_number" model="ir.ui.view">
+        <field name="name">product.template.part.number</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="string">Part Number</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_tin_number" model="ir.ui.view">
+        <field name="name">res.partner.tin.number</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="vrn_number"/>
+            </xpath>
+        </field>
+    </record> 
+    
+    <record id="hr_expense_additional_fields" model="ir.ui.view">
+        <field name="name">hr.expense.additions</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='account_id']" position="after">
+                <field name="purchase_order_no"/>
+                <field name="po_ref"/>
+            </xpath>
+        </field>
+    </record> 
+    <record id="hr_expense_additional_fields_list" model="ir.ui.view">
+        <field name="name">hr.expense.addition</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.view_my_expenses_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="before">
+                <field name="po_ref"/>
+            </xpath>
+        </field>
+    </record> 
+
+    <record id="res_company_additiona_data" model="ir.ui.view">
+        <field name="name">res.company.additional.data</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="company_vrn"/>
+                <field name="company_stamp"/>
+                <field name="company_bank_footer"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_additiona_data" model="ir.ui.view">
+        <field name="name">product.template.additional.data</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="product_description"/>
+            </xpath>
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="string" value="Part Number"></attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_additional_data" model="ir.ui.view">
+        <field name="name">purchase.order.additional.data</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="before">
+                <field name="purchase_requisition_ref"/>
+                <field name="customer_po_ref"/>
+                <field name="validity"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field  name="child_ids" invisible="1"/>
+                <field name="contact_person_id" widget="contact" domain="[('id', 'in', child_ids)]"/>
+            </xpath>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

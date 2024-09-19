@@ -1,0 +1,343 @@
+<odoo>
+    <data>
+        <template id="custom_external_layout_purchase_order">
+            <div class="header">
+                <div class="row">
+                    <div class="col-9">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                             alt="Company Logo" class="float-left"
+                             t-attf-style="height: 56px; width: 200px" />
+                    </div>
+                    <div class="col-3" width="100%" align="right" style="font-size:14px;">
+                        <strong style="color: #4673c0">PURCHASE ORDER</strong>
+                        <t t-if="company.id == 2">
+                            <p style="color: #26ace2; font-size: 10px;" class="pt-3">"Changing Fast, Leading the Market"</p>
+                        </t>
+                    </div>
+                </div>
+                <t t-if="company.id == 2">
+                    <div style="border-top: 2px solid #26ace2; margin-top: 4px; margin-bottom: 8px;"></div>
+                </t>
+            </div>
+
+
+            <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+                <t t-call="web.address_layout"/>
+                <t t-out="0"/>
+            </div>
+            <div class="footer">
+                <div class="oe_structure"/>
+            </div>
+        </template>
+
+        <template id="custom_external_purchase_order_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+
+            <t t-call="logmath_reports.custom_external_layout_purchase_order">
+                <t t-out="0"/>
+            </t>
+        </template>
+
+        <template id="report_purchase_order_custom">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="logmath_reports.custom_external_purchase_order_layout">
+                        <div class="row" style="font-family: Arial, sans-serif; font-size: 14px;">
+                            <div class="col-8" width="100%" valign="top" align="left">
+                                <br/>
+                                <div class="col-3" style="background-color: #3464ab">
+                                    <strong style="color: white" class="px-2">&amp;nbsp;To</strong>
+                                </div>
+                                <div style="font-size:12px;" class="px-2 pb-2">
+                                    <strong>&amp;nbsp;<span t-esc="doc.contact_person_id.name"/></strong>
+                                    <br />
+                                </div>
+                                <div style="font-size:12px;" class="px-2 pb-2">
+                                    <strong>&amp;nbsp;<span t-esc="doc.partner_id.name"/></strong>
+                                    <br />
+                                </div>
+                                <div style="font-size:12px;" class="px-2 pb-2">
+                                    <strong>&amp;nbsp;Mob:&amp;nbsp;<span t-esc="doc.contact_person_id.phone"/></strong>
+                                    <br />
+                                </div>
+                                <div style="font-size:12px;" class="px-2 pb-2">
+                                    <strong>&amp;nbsp;Email:&amp;nbsp;<span t-esc="doc.contact_person_id.email"/></strong>
+                                    <br />
+                                </div>
+                                <div style="font-size:12px; color: blue;" class="px-2 pb-2">
+                                    &amp;nbsp;<span t-esc="doc.partner_id.website"/>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="col-4" width="100%" valign="top" align="left">
+                                <table class="table table-striped table-sm" style="font-size: 11px;">
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>DATE</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.date_planned" t-options ='{"format": "dd/MM/yyyy"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>PO #</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>CUSTOMER ID</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.partner_id.id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>VALIDITY</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.validity"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>TIN</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.company_id.vat"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>VRN</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.company_id.company_vrn"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>PI REF</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.purchase_requisition_ref"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;"><span>PO NUMBER</span></td>
+                                        <td style="border: 1px solid black;"><span t-field="doc.customer_po_ref"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <table class="table table-striped table-sm" style=" text-transform:uppercase; font-size:12px; " width="100%">
+                                <thead t-attf-style="color:#ffffff; text-transform:capitalize; font-size:14px; border: 1px solid #3D50A5; background-color:#3464ab;">
+                                    <tr >
+                                        <td class="text-center" width="2%" t-attf-style="font-weight:bold;">S/n</td>
+                                        <td class="text-start" width="15%" t-attf-style="font-weight:bold;">PART NUMBER</td>
+                                        <td class="text-center" width="40%" t-attf-style="font-weight:bold;">DESCRIPTION</td>
+                                        <td class="text-center" width="10%" t-attf-style="font-weight:bold;">QUANTITY</td>
+                                        <td class="text-center" width="5%" t-attf-style="font-weight:bold;">UOM</td>
+                                        <td class="text-end" width="14%" t-attf-style="font-weight:bold;">UNIT PRICE</td>
+                                        <td class="text-center" width="14%" t-attf-style="font-weight:bold;">AMOUNT</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-as="l" t-foreach="doc.order_line">
+                                        <t t-if="l_odd">
+                                            <tr t-att-style="'page-break-inside: avoid !important;background-color: ffffff' ">
+                                                <t t-if="l.display_type == 'line_section'">
+                                                    <td colspan="99" class="text-center" style="border: 1px solid black; background-color: #ced4da;"><span t-field="l.name"/></td>
+                                                    <t t-set="current_section" t-value="l"/>
+                                                    <t t-set="current_subtotal" t-value="0"/>                                              
+                                                </t>
+                                                <t t-if="l.display_type == 'line_note'">
+                                                    <td colspan="99" class="text-center" style="border: 1px solid black; background-color: #ced4da;"><span t-field="l.name"/></td>
+                                                </t>
+                                                <t t-if="l.product_id">
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-esc="l_index+1"/>
+                                                    </td>
+                                                    <td class="text-start" style="border: 1px solid black;" >
+                                                        <span t-field="l.product_id.default_code"/>
+                                                    </td>
+                                                    <td class="text-start" style="border: 1px solid black;" >
+                                                        <span t-field="l.name"/>
+                                                    </td>
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-esc="'{:,.0f}'.format(l.product_qty)"/>
+                                                    </td>
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-field="l.product_uom"/>
+                                                    </td>                                               
+                                                    <td class="text-end" style="border: 1px solid black;" >
+                                                        <span t-field="l.price_unit"/>
+                                                    </td>
+                                                    <td class="text-end" style="border: 1px solid black;" >
+                                                        <span t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                        
+                                        <t t-if="l_even">
+                                           <tr t-att-style="'page-break-inside: avoid !important;background-color: ffffff' ">
+                                                <t t-if="l.display_type == 'line_section'">
+                                                    <td colspan="99" style="border: 1px solid black; background-color: #ced4da;"><span t-field="l.name"/></td>
+                                                    <t t-set="current_section" t-value="l"/>
+                                                    <t t-set="current_subtotal" t-value="0"/>                                              
+                                                </t>
+                                                <t t-if="l.display_type == 'line_note'">
+                                                    <td colspan="99" style="border: 1px solid black; background-color: #ced4da;"><span t-field="l.name"/></td>
+                                                </t>
+                                                <t t-if="l.product_id">
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-esc="l_index+1"/>
+                                                    </td>
+                                                    <td class="text-start" style="border: 1px solid black;" >
+                                                        <span t-field="l.product_id.default_code"/>
+                                                    </td>
+                                                    <td class="text-start" style="border: 1px solid black;" >
+                                                        <span t-field="l.name"/>
+                                                    </td>
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-esc="'{:,.0f}'.format(l.product_qty)"/>
+                                                    </td>
+                                                    <td class="text-center" style="border: 1px solid black;" >
+                                                        <span t-field="l.product_uom"/>
+                                                    </td>                                               
+                                                    <td class="text-end" style="border: 1px solid black;" >
+                                                        <span t-field="l.price_unit"/>
+                                                    </td>
+                                                    <td class="text-end" style="border: 1px solid black;" >
+                                                        <span t-esc="'{:,.2f}'.format(l.price_subtotal)"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td class="text-center">Subtotal</td>
+                                        <td class="text-end" style="background-color: #ddebf7"><strong><span t-field="doc.amount_untaxed"/></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" t-att-style="'page-break-inside: avoid !important;'">
+                            <div class="col-5">
+                                <table class="table table-sm" style="font-size: 11px;">
+                                    <tr><td style="border: 1px solid black;"><strong><span>Condition: Original &amp; New</span></strong></td></tr>
+                                    <tr><td style="border: 1px solid black;"><strong>Payment Terms:&amp;nbsp;<span t-field="doc.payment_term_id.name"></span></strong></td></tr>
+                                    <tr><td style="border: 1px solid black;"><strong><span>Delivery within 4 weeks from the date of receipt of PO</span></strong></td></tr>
+                                </table>
+                            </div>
+                             <!-- company stamp-->
+                            <div class="col-2">
+                                <img t-if="doc.company_id.company_stamp" t-att-src="image_data_uri(doc.company_id.company_stamp)"
+                                     alt="Company Stamp"
+                                     t-attf-style="height: 150px; width: 150px"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <t t-if="doc.company_id.id == 1">
+                            <div class="row"  name="company_info" t-att-style="'page-break-inside: avoid !important;'">
+                                <div class="small text-center">
+                                    <div>
+                                        <span style="font-size:10px; color: #4673c0">
+                                            <div class="row text-center" style="font-size: 11px; font-family: aptos;">
+                                                <div class="col-3 text-start">
+                                                    <span><strong>CRDB BANK</strong></span><br/>
+                                                    <span>Acc. Name: LOGMATH LIMITED</span><br/>
+                                                    <span>Acc. No: 0150705409900&amp;nbsp;(TZS)</span><br/>
+                                                    <span>Acc. No: 0250705409900&amp;nbsp;(USD)</span><br/>
+                                                    <span>Branch : UDSM</span><br/>
+                                                    <span>Swift Code: CORUTZTZ</span><br/>
+                                                </div>
+                                                <div class="col-3 text-start">
+                                                    <span><strong>EQUITY BANK</strong></span><br/>
+                                                    <span>Acc. Name: LOGMATH LIMITED</span><br/>
+                                                    <span>Acc. No: 3007211870401&amp;nbsp;(TZS)</span><br/>
+                                                    <span>Acc. No: 3007211870402&amp;nbsp;(USD)</span><br/>
+                                                    <span>Acc. No: 3007211870404&amp;nbsp;(EURO)</span><br/>
+                                                    <span>Br. No: 3007</span><br/>
+                                                    <span>Swift Code: EQBLTZTZ</span><br/>
+                                                </div>
+                                                <div class="col-3 text-start">
+                                                    <span><strong>MWANGA HAKIKA BANK</strong></span><br/>
+                                                    <span>Acc. Name: LOGMATH LIMITED</span><br/>
+                                                    <span>Acc. No: 005301000459&amp;nbsp;(TZS)</span><br/>
+                                                    <span>Br. No: 005</span><br/>
+                                                    <span>Swift Code: MINCBTZTZ</span><br/>
+                                                </div>
+                                                <div class="col-3 text-start">
+                                                    <span><strong>BANK OF AFRICA</strong></span><br/>
+                                                    <span>Acc. Name: LOGMATH LIMITED</span><br/>
+                                                    <span>Acc. No: 01932340000&amp;nbsp;(TZS)</span><br/>
+                                                    <span>Acc. No: 01932340012&amp;nbsp;(USD)</span><br/>
+                                                    <span>Br. No: 01004</span><br/>
+                                                    <span>Swift Code: EUAFTZTZ</span><br/>
+                                                </div>
+                                            </div>
+                                            <div style="border-top: 1px solid #26ace2; margin-top: 4px; margin-bottom: 8px;"></div>
+                                            <strong style="color: #4673c0">
+                                                Off University Road, Plot 271, House KAW/MLA/831, Unit C, P.O Box 35005, Dar es Salaam, Tanzania<br/>
+                                            </strong>
+                                                Mobile: +255(0) 714 951 980 (Whatsapp, WeChat) Office: +255 769 911 587<br/>
+                                                Email: operations@logmath.net<br/>
+                                                www.logmath.net
+                                        </span>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div> 
+                        </t>
+                        <t t-elif="doc.company_id.id == 2">
+                            <div class="row"  name="company_info" t-att-style="'page-break-inside: avoid !important;'">
+                                <div class="small text-center">
+                                    <div>
+                                        <span style="font-size:11px; color: #4673c0">
+                                            <strong style="color: #4673c0">
+                                                Bank Name: CRDB Bank, Account Name: LOGMATH TECHNOLOGY LIMITED, Account Number:0150391479100,<br/>
+                                                Univesty of Dar es Salaam Branch, Branch Code:3386, Swift Code: CORUTZTZ
+                                            </strong>
+                                            <div style="border-top: 1px solid #26ace2; margin-top: 4px; margin-bottom: 8px;"></div>
+                                            <strong style="color: #4673c0">
+                                                Off University Road, Plot 271, House KAW/MLA/831, Unit C, P.O Box 35005, Dar es Salaam, Tanzania<br/>
+                                            </strong>
+                                                Mobile: +255(0) 714 951 980 (Whatsapp, WeChat) Office: +255 769 911 587<br/>
+                                                Email: operations@logmath.net<br/>
+                                                www.logmath.net
+                                        </span>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div> 
+                        </t>
+                        <t t-else="">
+                            <div class="row"  name="company_info" t-att-style="'page-break-inside: avoid !important;'">
+                                <div class="small text-center">
+                                    <div>
+                                        <span style="font-size:11px; color: #4673c0">
+                                            <strong style="color: #4673c0">
+                                                LIVECHEM TECHNOLOGY LIMITED<br/>
+                                            </strong>
+                                            <div style="border-top: 1px solid #26ace2; margin-top: 4px; margin-bottom: 8px;"></div>
+                                            <strong style="color: #4673c0">
+                                                Off University Road, Plot 271, House KAW/MLA/831, Unit C, P.O Box 35005, Dar es Salaam, Tanzania<br/>
+                                            </strong>
+                                        </span>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>  
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="custom_report_purchaseorder" inherit_id="purchase.report_purchaseorder">
+            <xpath expr="//t[@t-call='web.html_container']" position="replace">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-call="logmath_reports.report_purchase_order_custom" t-lang="doc.partner_id.lang"/>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
